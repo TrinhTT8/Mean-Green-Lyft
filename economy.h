@@ -2,35 +2,22 @@
 #ifndef ECONOMY_H
 #define ECONOMY_H
 
-#include "driver.h"
+#include "tiereddriver.h"
 #include <string>
 
 using namespace std;
-//Class economy derived from class Driver
-class economy : public Driver {
+//Class economy derived from class TieredDriver (which derives from Driver)
+class economy : public TieredDriver {
     public:
 		//Constructor
-        economy (string, string, string, string, int, int, bool, bool, bool, double, int, string, string);
-        
-		//Mutator functions for economy drivers
-		void setLuggage(int);
-        void setRestrictions(string);
-        void setType(string);
-		
-		//Accessor functions for economy drivers
-        int getLuggage() {return luggage;}
-        string getRestrictions() {return restrictions;}
-        string getType() {return type;}
-        
-        void printDriver();
-        void editDriver();
+        economy (const string&, const string&, const string&, const string&, int, int, bool, bool, bool, double, int, const string&);
+
 		//Destructor
         ~economy() override{};
-		
-    private:
-        int luggage;
-        string restrictions;
-        string type;
+
+    protected:
+        const char* getLabel() const override { return "Economy"; }
+        const char* getPriceRange() const override { return "$-$$"; }
 };
 
 #endif

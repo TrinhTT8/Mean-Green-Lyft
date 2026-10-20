@@ -2,35 +2,22 @@
 #ifndef GROUP_H
 #define GROUP_H
 
-#include "driver.h"
+#include "tiereddriver.h"
 #include <string>
 
 using namespace std;
-//Class group derived from class Driver
-class group : public Driver {
+//Class group derived from class TieredDriver (which derives from Driver)
+class group : public TieredDriver {
     public:
 		//Constructor
-        group (string, string, string, string, int, int, bool, bool, bool, double, int, string, string);
-		
-		//Mutator functions for group drivers
-        void setLuggage(int);
-        void setRestrictions(string);
-        void setType(string);
-		
-		//Accessor functions for group drivers
-        int getLuggage() {return luggage;}
-        string getRestrictions() {return restrictions;}
-        string getType() {return type;}
-        
-        void editDriver();
-        void printDriver();
+        group (const string&, const string&, const string&, const string&, int, int, bool, bool, bool, double, int, const string&);
+
 		//Destructor
         ~group() override{};
-		
-    private:
-        int luggage;
-        string restrictions;
-        string type;
+
+    protected:
+        const char* getLabel() const override { return "Group"; }
+        const char* getPriceRange() const override { return "$$-$$$"; }
 };
 
 #endif

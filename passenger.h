@@ -10,31 +10,33 @@
 using namespace std;
 
 class Passenger {
-	
+
 	public:
-		Passenger(string, string, int, string, bool, bool , double);			//specified constructor
-		
+		Passenger(const string&, const string&, int, const string&, bool, bool , double);			//specified constructor
+
 		//mutator function for passenger's information
-		void setPassengerFname(string Pfname);
-		void setPassengerLname(string Plname);
-		void setPassengerID (int Pid);
-		void setPassengerPayment (string Ppay);
-		void setPassengerHandicapped (bool Phandicapped);
-		void setPassengerRatingRequired(double Prating);
-		void setPassengerPets(bool Ppets);
-		
+		void setPassengerFname(const string& Pfname) { PassFname = Pfname; }
+		void setPassengerLname(const string& Plname) { PassLname = Plname; }
+		void setPassengerID (int Pid) { PassID = Pid; }
+		void setPassengerPayment (const string& Ppay) { PassPayment = Ppay; }
+		void setPassengerHandicapped (bool Phandicapped) { PassHandicapped = Phandicapped; }
+		void setPassengerRatingRequired(double Prating) { PassRatingRequired = Prating; }
+		void setPassengerPets(bool Ppets) { PassPets = Ppets; }
+
 		//accessor functions for passenger's information
-		string getPassengerFname() { return PassFname; }
-		string getPassengerLname() { return PassLname; }
-		int getPassengerID() { return PassID; }
-		string getPassengerPayment() { return PassPayment; }
-		bool getPassengerHandicapped() {return PassHandicapped; }
-		double getPassengerRatingRequired() {return PassRatingRequired; }
-		bool getPassengerPets() { return PassPets; }
-		
-		//Print function 
-		void printPassenger();
-		
+		const string& getPassengerFname() const { return PassFname; }
+		const string& getPassengerLname() const { return PassLname; }
+		int getPassengerID() const { return PassID; }
+		const string& getPassengerPayment() const { return PassPayment; }
+		bool getPassengerHandicapped() const {return PassHandicapped; }
+		double getPassengerRatingRequired() const {return PassRatingRequired; }
+		bool getPassengerPets() const { return PassPets; }
+
+		//Print functions
+		static void printHeader();		// Column titles
+		void printRow() const;			// One row under the column titles
+		void printPassenger() const;	// Column titles + row
+
 	private:
 		string PassFname;
 		string PassLname;

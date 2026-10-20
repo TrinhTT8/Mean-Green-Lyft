@@ -1,38 +1,28 @@
-lyft: main.o passenger.o driver.o ride.o passengers.o drivers.o rides.o basic.o economy.o group.o luxury.o
-	g++ main.o passenger.o driver.o ride.o passengers.o drivers.o rides.o basic.o economy.o group.o luxury.o -o lyft
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall -O2
 
-main.o: main.cpp
-	g++ -c main.cpp
+OBJS = main.o utils.o passenger.o passengers.o driver.o tiereddriver.o basic.o economy.o group.o luxury.o drivers.o ride.o rides.o
 
-passenger.o: passenger.cpp passenger.h
-	g++ -c passenger.cpp
+lyft: $(OBJS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o lyft
 
-driver.o: driver.cpp driver.h
-	g++ -c driver.cpp
+# Each object file is rebuilt only when its own .cpp or a header it includes changes
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $<
 
-ride.o: ride.cpp ride.h
-	g++ -c ride.cpp
-
-passengers.o: passengers.cpp passengers.h passenger.cpp passenger.h
-	g++ -c passengers.cpp passenger.cpp
-
-drivers.o: drivers.cpp drivers.h driver.cpp driver.h basic.cpp basic.h economy.cpp economy.h group.cpp group.h luxury.cpp luxury.h
-	g++ -c drivers.cpp driver.cpp basic.cpp economy.cpp group.cpp luxury.cpp
-
-rides.o: rides.cpp rides.h ride.cpp ride.h
-	g++ -c rides.cpp ride.cpp
-
-basic.o: basic.cpp basic.h driver.cpp driver.h drivers.cpp drivers.h
-	g++ -c basic.cpp driver.cpp drivers.cpp
-
-economy.o: economy.cpp economy.h driver.cpp driver.h
-	g++ -c economy.cpp driver.cpp
-
-group.o: group.cpp group.h driver.cpp driver.h
-	g++ -c group.cpp driver.cpp
-
-luxury.o: luxury.cpp luxury.h driver.cpp driver.h
-	g++ -c luxury.cpp driver.cpp
+main.o: main.cpp passengers.h passenger.h drivers.h driver.h rides.h ride.h utils.h
+utils.o: utils.cpp utils.h
+passenger.o: passenger.cpp passenger.h utils.h
+passengers.o: passengers.cpp passengers.h passenger.h utils.h
+driver.o: driver.cpp driver.h utils.h
+tiereddriver.o: tiereddriver.cpp tiereddriver.h driver.h utils.h
+basic.o: basic.cpp basic.h tiereddriver.h driver.h
+economy.o: economy.cpp economy.h tiereddriver.h driver.h
+group.o: group.cpp group.h tiereddriver.h driver.h
+luxury.o: luxury.cpp luxury.h tiereddriver.h driver.h utils.h
+drivers.o: drivers.cpp drivers.h driver.h basic.h economy.h group.h luxury.h tiereddriver.h utils.h
+ride.o: ride.cpp ride.h utils.h
+rides.o: rides.cpp rides.h ride.h passenger.h driver.h utils.h
 
 clean:
-	rm *.o
+	rm -f *.o lyft

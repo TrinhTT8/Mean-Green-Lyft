@@ -2,38 +2,32 @@
 #ifndef LUXURY_H
 #define LUXURY_H
 
-#include "driver.h"
+#include "tiereddriver.h"
 #include <string>
 
 using namespace std;
-//Class luxury derived from class Driver
-class luxury : public Driver {
+//Class luxury derived from class TieredDriver (which derives from Driver)
+class luxury : public TieredDriver {
     public:
 		//Constructor
-        luxury (string, string, string, string, int, int, bool, bool, bool, double, int, string, string, string);
-        
-		//Mutator functions for luxury driver
-		void setLuggage(int);
-        void setRestrictions(string);
-        void setAmenities(string);
-        void setType(string);
-		
-		//Accessor functions for luxury driver
-        int getLuggage() {return luggage;}
-        string getRestrictions() {return restrictions;}
-        string getAmenities() {return amenities;}
-        string getType() {return type;}
-        
-        void editDriver();
-        void printDriver();
+        luxury (const string&, const string&, const string&, const string&, int, int, bool, bool, bool, double, int, const string&, const string&);
+
+		//Mutator and accessor for the luxury-only amenities
+        void setAmenities(const string& carAmen) { amenities = carAmen; }
+        const string& getAmenities() const { return amenities; }
+
+        void storeExtras(ostream&) const override;
 		//Destructor
         ~luxury() override {};
-        
+
+    protected:
+        const char* getLabel() const override { return "Luxury"; }
+        const char* getPriceRange() const override { return "$$$-$$$$$"; }
+        void printExtras() const override;
+        void editExtras() override;
+
     private:
-        int luggage;
-        string restrictions;
         string amenities;
-        string type; 
 };
 
 #endif

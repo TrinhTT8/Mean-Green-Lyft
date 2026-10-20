@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <iostream>
-#include "passenger.h" 
+#include "passenger.h"
 using namespace std;
 
 class Passengers
@@ -15,16 +15,15 @@ class Passengers
 		void addPass();
 		void editPass();
 		void deletePass();
-		void printAllPass();
-		Passenger* findPass();
-		void printPassRides();
+		void printAllPass() const;
+		Passenger* findPass() const;
 		vector<Passenger*>& getPassList();		// Get the list of passengers
-	
+
 		// Functions for data storage
-		void storePass();
+		void storePass() const;
 		void loadPass();
-		void clearPass();	
-	
+		void clearPass();
+
 	private:
 		vector<Passenger*> passList;	// A vector to store passenger objects
 };
